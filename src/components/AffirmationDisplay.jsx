@@ -4,38 +4,74 @@ import '../App.css';
 
 const AffirmationDisplay = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeElement, setActiveElement] = useState('current');
+  const [particles, setParticles] = useState([]);
 
   useEffect(() => {
     let timeoutId;
+    let particleInterval;
 
     const runCycle = () => {
-      // Start fade in
-      setIsVisible(true);
-
-      // Schedule fade out after 8 seconds (2s fade in + 6s visible)
+      // Show current affirmation for 8 seconds
       timeoutId = setTimeout(() => {
-        setIsVisible(false);
+        // Start fade out
+        setActiveElement('none'); // Both hidden
 
-        // Schedule next cycle after fade out completes (2s)
-        timeoutId = setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % affirmations.length);
-          runCycle();
-        }, 2000);
+        // After fade out completes (2.5s), wait 1.5s, then show next
+        setTimeout(() => {
+          const newNextIndex = (currentIndex + 1) % affirmations.length;
+          setCurrentIndex(newNextIndex);
+
+          // Show the new affirmation
+          setTimeout(() => {
+            setActiveElement('current');
+            runCycle();
+          }, 100); // Small delay to ensure state update
+        }, 4000); // 2.5s fade out + 1.5s pause
       }, 8000);
     };
 
-    // Start the first cycle
+    // Start the cycle
     runCycle();
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+    // Spawn purple twinkle particles periodically
+    particleInterval = setInterval(() => {
+      const newParticle = {
+        id: Date.now() + Math.random(),
+        x: 50 + (Math.random() - 0.5) * 30,
+        y: 50 + (Math.random() - 0.5) * 20,
+        delay: Math.random() * 0.5
+      };
+      setParticles(prev => [...prev.slice(-8), newParticle]);
+    }, 800);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(particleInterval);
+    };
+  }, [currentIndex]);
 
   return (
     <div className="affirmation-container">
-      <h2 className={`affirmation-text ${isVisible ? 'visible' : 'hidden'}`}>
+      {/* Single affirmation element */}
+      <h2
+        className={`affirmation-text ${activeElement === 'current' ? 'active' : 'inactive'}`}
+      >
         {affirmations[currentIndex]}
       </h2>
+
+      {/* Purple twinkle particles */}
+      {particles.map(particle => (
+        <div
+          key={particle.id}
+          className="twinkle-particle"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            animationDelay: `${particle.delay}s`
+          }}
+        />
+      ))}
 
       <style>{`
         .affirmation-container {
@@ -54,67 +90,82 @@ const AffirmationDisplay = () => {
 
         .affirmation-text {
           font-family: 'Fredoka', 'Quicksand', sans-serif;
-          font-size: clamp(36px, 8vw, 64px); /* Larger size */
-          font-weight: 700; /* Bold */
+          font-size: clamp(36px, 8vw, 64px);
+          font-weight: 700;
           text-align: center;
           width: 85%;
           max-width: 900px;
           line-height: 1.3;
           
-          /* Liquid Yellow-Orange Gradient */
+          /* Gradient with purple hints */
           background: linear-gradient(
             135deg, 
-            #FFD700 0%,   /* Golden Yellow */
-            #FFC947 25%,  /* Warm Gold */
-            #FFB347 50%,  /* Amber */
-            #FFCC33 75%,  /* Bright Yellow */
+            #FFD700 0%,
+            #FFC947 20%,
+            #FFB347 40%,
+            #E6A8D7 60%,
+            #D4A5FF 80%,
             #FFD700 100%
           );
-          background-size: 200% auto;
+          background-size: 300% auto;
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
           
-          /* Text Shadow for Glow (since color is transparent, we use drop-shadow filter) */
-          filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+          filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
           
-          /* Only transition opacity, let animation handle transform/filter */
-          transition: opacity 2s ease-in-out;
-          will-change: transform, opacity, filter;
+          /* Smooth transitions for everything */
+          transition: 
+            opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1),
+            filter 2.5s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+          
+          will-change: opacity, filter, transform;
         }
 
-        /* Animation: Continuous Growth & Blur */
-        .affirmation-text.visible {
+        .affirmation-text.active {
           opacity: 1;
-          animation: 
-            grow-and-blur 10s ease-out forwards,
-            liquid-shimmer 8s linear infinite;
+          filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+          transform: scale(1);
+          animation: gentle-shimmer 12s linear infinite;
         }
 
-        .affirmation-text.hidden {
+        .affirmation-text.inactive {
           opacity: 0;
-          /* Start with blur so it fades out nicely, but animation overrides when visible */
-          filter: blur(20px);
-          transform: scale(1); 
+          filter: drop-shadow(0 0 40px rgba(212, 165, 255, 0.3)) blur(15px);
+          transform: scale(0.95);
         }
 
-        @keyframes grow-and-blur {
+        @keyframes gentle-shimmer {
+          0%, 100% { background-position: 0% center; }
+          50% { background-position: 100% center; }
+        }
+
+        /* Purple twinkle particles */
+        .twinkle-particle {
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          background: radial-gradient(circle, #D4A5FF, transparent);
+          border-radius: 50%;
+          pointer-events: none;
+          animation: twinkle-fade 2s ease-out forwards;
+          box-shadow: 0 0 8px rgba(212, 165, 255, 0.8);
+        }
+
+        @keyframes twinkle-fade {
           0% {
-            transform: scale(1);
-            filter: blur(0px) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+            opacity: 0;
+            transform: scale(0) translateY(0);
           }
-          50% {
-            /* Keep clear for first half */
-            filter: blur(0px) drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+          20% {
+            opacity: 1;
+            transform: scale(1) translateY(-5px);
           }
           100% {
-            transform: scale(1.5);
-            filter: blur(20px) drop-shadow(0 0 30px rgba(255, 215, 0, 0));
+            opacity: 0;
+            transform: scale(0.5) translateY(-20px);
           }
-        }
-        
-        @keyframes liquid-shimmer {
-          to { background-position: 200% center; }
         }
       `}</style>
     </div>
