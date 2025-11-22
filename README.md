@@ -1,16 +1,50 @@
-# React + Vite
+# ✨ Panic Relief ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> *A sanctuary under the stars for when the world feels too heavy*
 
-Currently, two official plugins are available:
+## 🌟 What is this?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Panic Relief is a calming web app designed to help you navigate through moments of anxiety and panic. Like finding peace under a starry night sky, this app provides a gentle space to breathe, ground yourself, and remember that you're safe.
 
-## React Compiler
+## ⭐ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**🌠 Starry Constellation Background**  
+A peaceful night sky with twinkling stars and gentle constellation lines to anchor your focus.
 
-## Expanding the ESLint configuration
+**💫 Calming Affirmations**  
+215 soothing affirmations with a liquid gold gradient and purple twinkle particles. Each message appears, holds space for you, then gently dissolves before the next one emerges.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**🌌 Guided Breathing Mode**  
+An immersive breathing exercise with:
+- Slower, therapeutic pacing (18-second cycles)
+- Full-screen color transitions (vibrant blues → deep purples)
+- Dynamic constellation patterns that morph with your breath
+- Clear visual cues for inhale, hold, exhale, and pause
+
+**✨ Living Button**  
+A pastel gradient button that breathes along with you, inviting you to sync your rhythm even before you click.
+
+## 🌙 How to Use
+
+1. **Default Mode**: Watch the affirmations appear and let them wash over you
+2. **Breathing Mode**: Click "breathe with me" and follow the visual guidance
+3. **Exit**: Click "← Back" whenever you're ready to return
+
+## 🌟 Live Demo
+
+Visit: [https://loy-second-alias.github.io/panic-relief/](https://loy-second-alias.github.io/panic-relief/)
+
+## 💜 Philosophy
+
+This app believes that:
+- You deserve a safe space to feel
+- Your breath is your anchor
+- Peace is always within reach
+- You are held by something greater
+
+---
+
+✨ **Made with care by Loy** ✨  
+📱 Connect: [https://t.me/okayloy](https://t.me/okayloy)
+
+*May you find your calm under these digital stars* 🌠
