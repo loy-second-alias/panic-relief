@@ -6,22 +6,30 @@
   --star-color: #FFF9E6;
   --star-glow: rgba(255, 249, 230, 0.6);
 
-  /* Breathing Mode - Inhale (Blue) */
-  --inhale-primary: #3B5998;
-  --inhale-secondary: #5B7DC6;
-  --inhale-tertiary: #7EA3E8;
-  --inhale-accent: #A8C5F5;
+  /* Breathing Mode - Inhale (Vibrant Blue) */
+  --inhale-primary: #0077FF;
+  /* Bright Electric Blue */
+  --inhale-secondary: #00A3FF;
+  /* Cyan-Blue */
+  --inhale-tertiary: #42C2FF;
+  /* Sky Blue */
+  --inhale-accent: #85D8FF;
 
-  /* Breathing Mode - Exhale (Purple) */
-  --exhale-primary: #4A2C5E;
-  --exhale-secondary: #6B4A7D;
-  --exhale-tertiary: #8B6B9D;
-  --exhale-accent: #B49FCC;
+  /* Breathing Mode - Exhale (Rich Purple) */
+  --exhale-primary: #6600CC;
+  /* Deep Royal Purple */
+  --exhale-secondary: #9900FF;
+  /* Vivid Violet */
+  --exhale-tertiary: #CC33FF;
+  /* Magenta-Purple */
+  --exhale-accent: #E085FF;
 
   /* Text Colors */
-  --text-affirmation: #E8EFF9;
+  --text-affirmation: #FFD700;
+  /* Golden Yellow */
   --text-instruction: #FFFFFF;
-  --text-glow: rgba(232, 239, 249, 0.5);
+  --text-glow: rgba(255, 215, 0, 0.6);
+  /* Golden Glow */
 }
 
 * {
