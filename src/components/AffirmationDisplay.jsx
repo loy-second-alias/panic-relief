@@ -78,7 +78,8 @@ const AffirmationDisplay = () => {
           /* Text Shadow for Glow (since color is transparent, we use drop-shadow filter) */
           filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
           
-          transition: opacity 2s ease-in-out, filter 2s ease-in-out;
+          /* Only transition opacity, let animation handle transform/filter */
+          transition: opacity 2s ease-in-out;
           will-change: transform, opacity, filter;
         }
 
@@ -92,14 +93,19 @@ const AffirmationDisplay = () => {
 
         .affirmation-text.hidden {
           opacity: 0;
+          /* Start with blur so it fades out nicely, but animation overrides when visible */
           filter: blur(20px);
-          transform: scale(1); /* Reset scale for next entry */
+          transform: scale(1); 
         }
 
         @keyframes grow-and-blur {
           0% {
             transform: scale(1);
             filter: blur(0px) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+          }
+          50% {
+            /* Keep clear for first half */
+            filter: blur(0px) drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
           }
           100% {
             transform: scale(1.5);
