@@ -53,36 +53,62 @@ const AffirmationDisplay = () => {
         }
 
         .affirmation-text {
-          font-family: 'Comfortaa', sans-serif;
-          font-size: clamp(24px, 6vw, 42px);
-          font-weight: 400;
-          color: var(--text-affirmation);
+          font-family: 'Fredoka', 'Quicksand', sans-serif;
+          font-size: clamp(36px, 8vw, 64px); /* Larger size */
+          font-weight: 700; /* Bold */
           text-align: center;
           width: 85%;
-          max-width: 800px;
-          line-height: 1.5;
-          text-shadow: 
-            0 0 20px var(--text-glow),
-            0 0 40px rgba(255, 215, 0, 0.3);
-          transition: opacity 2s ease-in-out, filter 2s ease-in-out, transform 2s ease-in-out;
+          max-width: 900px;
+          line-height: 1.3;
+          
+          /* Liquid Yellow-Orange Gradient */
+          background: linear-gradient(
+            135deg, 
+            #FFD700 0%,   /* Golden Yellow */
+            #FFC947 25%,  /* Warm Gold */
+            #FFB347 50%,  /* Amber */
+            #FFCC33 75%,  /* Bright Yellow */
+            #FFD700 100%
+          );
+          background-size: 200% auto;
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          
+          /* Text Shadow for Glow (since color is transparent, we use drop-shadow filter) */
+          filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+          
+          transition: opacity 2s ease-in-out, filter 2s ease-in-out;
+          will-change: transform, opacity, filter;
         }
 
+        /* Animation: Continuous Growth & Blur */
         .affirmation-text.visible {
           opacity: 1;
-          filter: blur(0px);
-          transform: translateY(0px);
-          animation: float 6s ease-in-out infinite;
+          animation: 
+            grow-and-blur 10s ease-out forwards,
+            liquid-shimmer 8s linear infinite;
         }
 
         .affirmation-text.hidden {
           opacity: 0;
-          filter: blur(15px);
-          transform: translateY(20px);
+          filter: blur(20px);
+          transform: scale(1); /* Reset scale for next entry */
         }
 
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
+        @keyframes grow-and-blur {
+          0% {
+            transform: scale(1);
+            filter: blur(0px) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+          }
+          100% {
+            transform: scale(1.5);
+            filter: blur(20px) drop-shadow(0 0 30px rgba(255, 215, 0, 0));
+          }
+        }
+        
+        @keyframes liquid-shimmer {
+          to { background-position: 200% center; }
         }
       `}</style>
     </div>

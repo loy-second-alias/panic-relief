@@ -30,6 +30,18 @@
   --text-instruction: #FFFFFF;
   --text-glow: rgba(255, 215, 0, 0.6);
   /* Golden Glow */
+
+  /* Pastel Button Gradient Colors */
+  --btn-pastel-1: #FFB7B2;
+  /* Pastel Pink */
+  --btn-pastel-2: #E2F0CB;
+  /* Pastel Mint */
+  --btn-pastel-3: #C7CEEA;
+  /* Pastel Lavender */
+  --btn-pastel-4: #FFDAC1;
+  /* Pastel Peach */
+  --btn-pastel-5: #B5EAD7;
+  /* Pastel Green */
 }
 
 * {
@@ -39,7 +51,7 @@
 }
 
 body {
-  font-family: 'Comfortaa', 'Quicksand', sans-serif;
+  font-family: 'Fredoka', 'Comfortaa', 'Quicksand', sans-serif;
   background: radial-gradient(ellipse at center,
       var(--bg-mid) 0%,
       #0D1129 50%,

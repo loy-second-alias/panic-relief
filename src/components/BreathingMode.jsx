@@ -28,7 +28,7 @@ const BreathingMode = ({ onExit }) => {
         case 'exhale': nextPhase = 'pause'; break;
         case 'pause':
           nextPhase = 'inhale';
-          setCycleCount(c => c + 1); // Increment cycle count on loop
+          setCycleCount(c => c + 1);
           break;
         default: nextPhase = 'inhale';
       }
@@ -62,13 +62,12 @@ const BreathingMode = ({ onExit }) => {
 
   return (
     <div className="breathing-container">
-      {/* Background Blobs - More vibrant and opaque */}
-      <div className={`blob-layer phase-${phase}`}>
-        <div className="blob blob-1" />
-        <div className="blob blob-2" />
-        <div className="blob blob-3" />
-        <div className="blob blob-4" />
-        <div className="blob blob-5" />
+      {/* Immersive Full-Screen Background Blobs */}
+      <div className={`immersive-bg phase-${phase}`}>
+        <div className="blob-large blob-1" />
+        <div className="blob-large blob-2" />
+        <div className="blob-large blob-3" />
+        <div className="blob-large blob-4" />
       </div>
 
       {/* Dynamic Breathing Constellation */}
@@ -98,6 +97,7 @@ const BreathingMode = ({ onExit }) => {
           height: 100%;
           z-index: 50;
           animation: fade-in 1.5s ease-out forwards;
+          overflow: hidden;
         }
 
         @keyframes fade-in {
@@ -105,59 +105,67 @@ const BreathingMode = ({ onExit }) => {
           to { opacity: 1; }
         }
 
-        /* --- Background Blobs --- */
-        .blob-layer {
+        /* --- Immersive Background --- */
+        .immersive-bg {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
           z-index: 1;
-          transition: all 5s ease; /* Slower transition for slower breath */
+          transition: all 4s ease-in-out; /* Smooth transition between phases */
         }
 
-        .blob {
+        .blob-large {
           position: absolute;
           border-radius: 50%;
-          filter: blur(60px); /* Slightly less blur for more defined color */
-          opacity: 0.9; /* Increased opacity for vibrancy */
-          animation: blob-float 25s infinite ease-in-out;
-          mix-blend-mode: screen; /* Vibrant blending */
+          filter: blur(80px); /* Heavy blur for dreamlike effect */
+          opacity: 0.8;
+          animation: blob-morph 20s infinite ease-in-out alternate;
+          will-change: transform, opacity, background;
+          transition: background 4s ease-in-out;
         }
 
-        .blob-1 { top: 10%; left: 10%; width: 60vw; height: 60vw; }
-        .blob-2 { bottom: 10%; right: 10%; width: 70vw; height: 70vw; animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 40%; width: 50vw; height: 50vw; animation-delay: -10s; }
-        .blob-4 { top: 60%; left: 10%; width: 40vw; height: 40vw; animation-delay: -15s; }
-        .blob-5 { top: 10%; right: 30%; width: 45vw; height: 45vw; animation-delay: -20s; }
+        /* Large blobs covering screen */
+        .blob-1 { top: -20%; left: -20%; width: 80vw; height: 80vw; }
+        .blob-2 { bottom: -20%; right: -20%; width: 90vw; height: 90vw; animation-delay: -5s; }
+        .blob-3 { top: 30%; left: 40%; width: 70vw; height: 70vw; animation-delay: -10s; }
+        .blob-4 { bottom: 10%; left: -10%; width: 60vw; height: 60vw; animation-delay: -15s; }
 
-        @keyframes blob-float {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(40px, -60px) scale(1.1); }
-          66% { transform: translate(-30px, 30px) scale(0.9); }
+        @keyframes blob-morph {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(30px, -30px) scale(1.1); }
         }
 
-        /* Phase Colors - Using new vibrant variables */
-        .phase-inhale .blob { background: var(--inhale-primary); }
-        .phase-hold .blob { background: var(--inhale-secondary); }
-        .phase-exhale .blob { background: var(--exhale-primary); }
-        .phase-pause .blob { background: var(--exhale-secondary); }
+        /* Phase Colors - Smooth Interpolation */
+        /* INHALE: Vibrant Blues */
+        .phase-inhale .blob-1 { background: var(--inhale-primary); }
+        .phase-inhale .blob-2 { background: var(--inhale-secondary); }
+        .phase-inhale .blob-3 { background: var(--inhale-tertiary); }
+        .phase-inhale .blob-4 { background: var(--inhale-accent); }
+        
+        /* HOLD: Deepening Blues */
+        .phase-hold .blob-1 { background: var(--inhale-primary); }
+        .phase-hold .blob-2 { background: var(--inhale-secondary); }
+        .phase-hold .blob-3 { background: var(--inhale-tertiary); }
+        .phase-hold .blob-4 { background: var(--inhale-accent); }
 
-        /* Gradient overrides for depth */
-        .phase-inhale .blob-1 { background: radial-gradient(circle, var(--inhale-primary), transparent 70%); }
-        .phase-inhale .blob-2 { background: radial-gradient(circle, var(--inhale-secondary), transparent 70%); }
-        .phase-inhale .blob-3 { background: radial-gradient(circle, var(--inhale-tertiary), transparent 70%); }
-        
-        .phase-exhale .blob-1 { background: radial-gradient(circle, var(--exhale-primary), transparent 70%); }
-        .phase-exhale .blob-2 { background: radial-gradient(circle, var(--exhale-secondary), transparent 70%); }
-        .phase-exhale .blob-3 { background: radial-gradient(circle, var(--exhale-tertiary), transparent 70%); }
-        
-        .blob { transition: background 5s ease; }
+        /* EXHALE: Rich Purples */
+        .phase-exhale .blob-1 { background: var(--exhale-primary); }
+        .phase-exhale .blob-2 { background: var(--exhale-secondary); }
+        .phase-exhale .blob-3 { background: var(--exhale-tertiary); }
+        .phase-exhale .blob-4 { background: var(--exhale-accent); }
+
+        /* PAUSE: Soft Purples */
+        .phase-pause .blob-1 { background: var(--exhale-primary); }
+        .phase-pause .blob-2 { background: var(--exhale-secondary); }
+        .phase-pause .blob-3 { background: var(--exhale-tertiary); }
+        .phase-pause .blob-4 { background: var(--exhale-accent); }
 
         /* --- Instructions --- */
         .instruction-container {
           position: absolute;
-          top: 35%; /* Adjusted for better visibility */
+          top: 35%;
           left: 50%;
           transform: translate(-50%, -50%);
           z-index: 20;
@@ -168,9 +176,9 @@ const BreathingMode = ({ onExit }) => {
         }
 
         .instruction-text {
-          font-family: 'Comfortaa', sans-serif;
-          font-size: clamp(32px, 6vw, 52px);
-          font-weight: 400;
+          font-family: 'Fredoka', 'Quicksand', sans-serif; /* Updated Font */
+          font-size: clamp(36px, 8vw, 60px);
+          font-weight: 700; /* Bold */
           color: var(--text-instruction);
           text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
           letter-spacing: 2px;
@@ -179,7 +187,7 @@ const BreathingMode = ({ onExit }) => {
         }
 
         @keyframes text-fade {
-          from { opacity: 0; filter: blur(10px); transform: scale(0.9); }
+          from { opacity: 0; filter: blur(10px); transform: scale(0.95); }
           to { opacity: 1; filter: blur(0px); transform: scale(1); }
         }
 
@@ -194,8 +202,9 @@ const BreathingMode = ({ onExit }) => {
           border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 40px;
           padding: 12px 20px;
-          font-family: 'Comfortaa', sans-serif;
-          font-size: 14px;
+          font-family: 'Fredoka', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
           color: #FFFFFF;
           cursor: pointer;
           opacity: 0;
